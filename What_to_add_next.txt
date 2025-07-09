@@ -1,0 +1,3 @@
+Add the py files for the data collection - laptop file and raspberry pi file
+Add files for the inference - laptop client and raspberry pi pre processing
+repo with images is already there track3

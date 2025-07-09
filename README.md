@@ -1,14 +1,15 @@
-# 🏎️ End-to-End Self-Driving Model Car using CNN & Raspberry Pi
+# Self-Driving Model Car using CNN & Raspberry Pi
 
 This project showcases a miniature self-driving car built with a Raspberry Pi and a camera module that mimics real car steering using Ackermann geometry. The car drives autonomously by predicting steering angles from live camera images using a Convolutional Neural Network (CNN) trained on human driving data.
 
 ---
-
+![Model Car](Images/Car_front.jpeg)
 ## 📌 Project Overview
 
 The goal was to simulate the self-driving pipeline on a small-scale RC car:
 
 1. **Ackermann Steering Implementation** to mimic real car steering behavior.
+2. **Software Differential**: Adjusts wheel speeds on turns to mimic a differential (left/right wheels move at different speeds).
 2. **Data Collection**: Manually driving the car on a custom track while collecting images and corresponding steering angles.
 3. **Model Training**: A modified version of NVIDIA’s PilotNet CNN was trained using the collected data.
 4. **Deployment**: Real-time inference performed on a laptop, with communication over a socket to the Raspberry Pi for control.
@@ -23,6 +24,8 @@ The goal was to simulate the self-driving pipeline on a small-scale RC car:
 - **Motor Driver Module**
 - **Battery Pack**
 - **Laptop (for inference and control logic)**
+- **9g Metal Gear Servo**: Used for steering control.
+- **All-Wheel Drive**: Motors on all four wheels to support realistic motion and turns.
 
 ---
 
@@ -36,46 +39,40 @@ The goal was to simulate the self-driving pipeline on a small-scale RC car:
 
 ---
 
+# 🛤️ Track
+
+![Model Car](Images/Topdown_track_image.jpeg)
+
 ## 🧪 Data Collection
 
-- **Driving Style**: Human-controlled driving on a custom-made track
-- **Samples Collected**: 4,000 images
+- Car was manually driven on a closed track.
+- Both clockwise and anticlockwise runs were performed.
+- 4000 raw images collected.
 - **Label Format**: Steering angle encoded directly in the image filename
-
-# 🏎️ Autonomous Model Car
-
-![Model Car](https://github.com/user-attachments/assets/add61eb0-779b-493c-a30d-2a43d2469282)
-
-A self-driving model car project that mimics the steering behavior of a real car using Ackermann steering geometry. It uses computer vision and a CNN model trained on real driving data to autonomously predict steering angles from live camera images.
-
----
-
-## 🔧 Hardware Specifications
-
-- **Ackermann Steering Mechanism**: Simulates real car steering dynamics.
-- **Software Differential**: Adjusts wheel speeds on turns to mimic a differential (left/right wheels move at different speeds).
-- **Two Battery Packs**: One dedicated to the Raspberry Pi and another for motors.
-- **9g Metal Gear Servo**: Used for steering control.
-- **All-Wheel Drive**: Motors on all four wheels to support realistic motion and turns.
+- After augmentation (flipping, brightness, shadow, etc.): **30,000+ images** used for training.
 
 ---
 
 ## 💻 Software Overview
 
-- **Raspberry Pi 3 B+**
-- **Raspberry Pi Camera Module**
-- **Laptop**: Used for running inference and controlling the car over socket.
+- **Data collection** This script enables manual driving of the car using standard WASD keyboard inputs from a laptop via an SSH connection. This setup was also leveraged to collect driving data. To efficiently handle simultaneous tasks like receiving control inputs and managing data collection, the Python script utilizes multiprocessing.
+
+- **Preprocessing and Model Training**: Images are croped and resized and converted to YUV frormat for model input
+
+- **Model Training**: Used for running inference and controlling the car over socket.
+
+- **Inference**: Raspberry pi click and preprocess the images for model input then sends it over a socket connection to my laptop for model inference then inferenced value is send back to car for turning
 
 ### 📂 Key Files
 
 - `data_collection.py`: Captures images from the car’s front-facing camera and logs corresponding steering angles.
-- `model.py`: Modified version of NVIDIA’s PilotNet architecture.
-- `inference_server.py`: Receives preprocessed images from the Pi, predicts steering angle, and sends it back.
+- `model.keras`: Modified version of NVIDIA’s PilotNet architecture.
+- `Laptopserver.py`: Receives preprocessed images from the Pi, predicts steering angle, and sends it back.
 - `pi_client.py`: Captures image → preprocesses → sends to laptop → receives steering → actuates motor.
 
 ---
 
-## 🧪 Data Collection
+<!-- ## 🧪 Data Collection
 
 - Car was manually driven on a closed track.
 - Both clockwise and anticlockwise runs were performed.
@@ -85,4 +82,4 @@ A self-driving model car project that mimics the steering behavior of a real car
 
 Example file naming:  
 ```bash
-image_00325_steer_-0.23.jpg
+image_00325_steer_-0.23.jpg -->
