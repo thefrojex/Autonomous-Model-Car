@@ -3,6 +3,11 @@
 This project showcases a miniature self-driving car built with a Raspberry Pi and a camera module that mimics real car steering using Ackermann geometry. The car drives autonomously by predicting steering angles from live camera images using a Convolutional Neural Network (CNN) trained on human driving data.
 
 ---
+
+https://github.com/user-attachments/assets/a031df37-a202-47c0-ad28-310fdca0bdac
+
+
+
 ![Model Car](Images/Car_front.jpeg)
 ## 📌 Project Overview
 
