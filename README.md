@@ -4,7 +4,11 @@ This project showcases a miniature self-driving car built with a Raspberry Pi an
 
 ---
 
-https://github.com/user-attachments/assets/a031df37-a202-47c0-ad28-310fdca0bdac
+
+https://github.com/user-attachments/assets/03713ffb-1726-465d-84f6-bb113e303b0e
+
+
+
 
 
 
