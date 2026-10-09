@@ -1,0 +1,32 @@
+# datasets (collected frames and labels stay local)
+road_data/
+track3/
+dataset/
+data/
+steering_angles.csv
+*.npy
+*.npz
+
+# large model weights (anything this big does not belong in git; use a release or LFS)
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+
+# environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# os / editor
+.DS_Store
+.idea/
+.vscode/
+
+# local config and large source media
+.env
+*.mp4

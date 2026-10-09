@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Curved Strip Camera View</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <!-- Three.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+    <script>
+    // Basic setup
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xeeeeee); // Light background
+
+    // Camera setup
+    const camera = new THREE.PerspectiveCamera(
+        75, // field of view
+        window.innerWidth / window.innerHeight, // aspect ratio
+        0.1, // near clipping plane
+        1000 // far clipping plane
+    );
+    camera.position.set(0, 0, 1); // (x=0, y=0, z=1)
+    camera.lookAt(new THREE.Vector3(1, 0, 1)); // Looking along +x direction
+
+    // Renderer setup
+    const renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Curved Strip (RingGeometry)
+    const innerRadius = 2;
+    const outerRadius = 3;
+    const thetaSegments = 64;
+    const phiSegments = 1;
+    const thetaStart = 0; // starting angle
+    const thetaLength = Math.PI / 2; // 90 degrees sector
+
+    const stripGeometry = new THREE.RingGeometry(
+        innerRadius, 
+        outerRadius, 
+        thetaSegments, 
+        phiSegments, 
+        thetaStart, 
+        thetaLength
+    );
+
+    const stripMaterial = new THREE.MeshBasicMaterial({
+        color: 0x00ff00, 
+        side: THREE.DoubleSide,
+        wireframe: false
+    });
+
+    const strip = new THREE.Mesh(stripGeometry, stripMaterial);
+    scene.add(strip);
+
+    // Add a simple grid for reference
+    const gridHelper = new THREE.GridHelper(10, 10);
+    scene.add(gridHelper);
+
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+
+        // Optional: rotate the strip slowly
+        // strip.rotation.z += 0.01;
+
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Handle window resizing
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    </script>
+</body>
+</html>
